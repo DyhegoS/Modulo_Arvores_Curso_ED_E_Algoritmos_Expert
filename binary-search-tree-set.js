@@ -15,6 +15,38 @@ export default class BinarySearchTreeSet{
         return this.#size === 0;
     }
 
+    add(key){
+        if(key === null){
+            throw new Error("Chave não pode ser nula!");
+        }
+
+        if(this.isEmpty()){
+            this.#root = new Node(key, null);
+            this.#root.left = new Node(null, this.#root);
+            this.#root.right = new Node(null, this.#root);
+            this.#size++;
+            return;
+        }
+
+        let node = this.#findKeyLocation(this.#root, key);
+
+        if(node.isSentinel()){
+            let parent = node.parent;
+            let newNode = new Node(key, parent);
+            newNode.left = new Node(null, newNode);
+            newNode.right = new Node(null, newNode);
+
+            if(node === parent.left){
+                parent.left = newNode;
+            }
+            else if(node === parent.right){
+                parent.right = newNode;
+            }
+
+            this.#size++;
+        }
+    }
+
     #findKeyLocation(node, key){
         while(!node.isSentinel()){
             if(key === node.key){

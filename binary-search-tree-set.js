@@ -1,31 +1,31 @@
-export default class BinarySearchTreeSet{
+export default class BinarySearchTreeSet {
     #size;
     #root;
 
-    constructor(collection = []){
+    constructor(collection = []) {
         this.#size = 0;
         this.#root = new Node(null, null);
         this.addAll(collection);
     }
 
-    size(){
+    size() {
         return this.#size;
     }
 
-    isEmpty(){
+    isEmpty() {
         return this.#size === 0;
     }
 
-    addAll(collection){
+    addAll(collection) {
         collection.forEach(item => this.add(item));
     }
 
-    add(key){
-        if(key === null){
+    add(key) {
+        if (key === null) {
             throw new Error("Chave não pode ser nula!");
         }
 
-        if(this.isEmpty()){
+        if (this.isEmpty()) {
             this.#root = new Node(key, null);
             this.#root.left = new Node(null, this.#root);
             this.#root.right = new Node(null, this.#root);
@@ -35,16 +35,16 @@ export default class BinarySearchTreeSet{
 
         let node = this.#findKeyLocation(this.#root, key);
 
-        if(node.isSentinel()){
+        if (node.isSentinel()) {
             let parent = node.parent;
             let newNode = new Node(key, parent);
             newNode.left = new Node(null, newNode);
             newNode.right = new Node(null, newNode);
 
-            if(node === parent.left){
+            if (node === parent.left) {
                 parent.left = newNode;
             }
-            else if(node === parent.right){
+            else if (node === parent.right) {
                 parent.right = newNode;
             }
 
@@ -52,31 +52,47 @@ export default class BinarySearchTreeSet{
         }
     }
 
-    #findKeyLocation(node, key){
-        while(!node.isSentinel()){
-            if(key === node.key){
+    #findKeyLocation(node, key) {
+        while (!node.isSentinel()) {
+            if (key === node.key) {
                 return node;
             }
-            else if(key < node.key){
+            else if (key < node.key) {
                 node = node.left;
             }
-            else{
+            else {
                 node = node.right;
             }
         }
         return node;
     }
+
+    keys() {
+        let keysList = [];
+        this.#collectKeys(this.#root, keysList);
+        return keysList;
+    }
+
+    #collectKeys(node, keysList) {
+        if(!node.isSentinel()){
+            this.#collectKeys(node.left, keysList);
+            keysList.push(node.key);
+            this.#collectKeys(node.right, keysList);
+        }
+
+    }
+
 }
 
 
-class Node{
-    constructor(key, parent){
+class Node {
+    constructor(key, parent) {
         this.key = key;
         this.parent = parent;
         this.left = this.right = null;
     }
 
-    isSentinel(){
-        return this.key === null; 
+    isSentinel() {
+        return this.key === null;
     }
 }

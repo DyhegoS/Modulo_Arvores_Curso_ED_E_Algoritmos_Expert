@@ -2,9 +2,10 @@ export default class BinarySearchTreeSet{
     #size;
     #root;
 
-    constructor(){
+    constructor(collection = []){
         this.#size = 0;
         this.#root = new Node(null, null);
+        this.addAll(collection);
     }
 
     size(){
@@ -13,6 +14,10 @@ export default class BinarySearchTreeSet{
 
     isEmpty(){
         return this.#size === 0;
+    }
+
+    addAll(collection){
+        collection.forEach(item => this.add(item));
     }
 
     add(key){

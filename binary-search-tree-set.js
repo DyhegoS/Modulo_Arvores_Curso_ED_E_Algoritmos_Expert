@@ -67,6 +67,11 @@ export default class BinarySearchTreeSet {
         return node;
     }
 
+    constains(key){
+        const node = this.#findKeyLocation(this.#root, key);
+        return !node.isSentinel()
+    }
+
     keys() {
         let keysList = [];
         this.#collectKeys(this.#root, keysList);
@@ -79,9 +84,27 @@ export default class BinarySearchTreeSet {
             keysList.push(node.key);
             this.#collectKeys(node.right, keysList);
         }
-
     }
 
+    toString(){
+        return this.keys().toString();
+    }
+
+    toStringFormat(){
+        let sb = [];
+        this.#toStringFormatHelper(this.#root, 0, sb);
+        return sb.join("");
+    }
+
+    #toStringFormatHelper(node, depth, sb){
+        if(!node.isSentinel()){
+            this.#toStringFormatHelper(node.right, depth + 1, sb);
+            let spaces = (depth > 0) ? "  ".repeat(depth) + "--" : "";
+            let parent = (depth > 0) ? node.parent.key.toString() : "";
+            sb.push(`${spaces}(${node.key})${parent}\n`);
+            this.#toStringFormatHelper(node.left, depth + 1, sb);
+        }
+    }
 }
 
 

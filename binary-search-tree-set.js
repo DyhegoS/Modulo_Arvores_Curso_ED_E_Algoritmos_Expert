@@ -52,6 +52,35 @@ export default class BinarySearchTreeSet {
         }
     }
 
+    remove(key){
+        if(!key){
+            throw new Error("Key cannot be null");
+        }
+
+        let nodeToRemove = this.#findKeyLocation(this.#root, key);
+
+        if(nodeToRemove.isSentinel()){
+            return false;
+        }
+
+        let child = nodeToRemove.left.isSentinel() ? nodeToRemove.right : nodeToRemove.left;
+
+        child.parent = nodeToRemove.parent;
+
+        if(!nodeToRemove.parent){
+            this.#root = child;
+
+        }
+        else if(nodeToRemove === nodeToRemove.parent.left){
+            nodeToRemove.parent.left = child;
+        }else{
+            nodeToRemove.parent.right = child;
+        }
+
+        this.#size--;
+        return true;
+    }
+
     #findKeyLocation(node, key) {
         while (!node.isSentinel()) {
             if (key === node.key) {
@@ -99,7 +128,7 @@ export default class BinarySearchTreeSet {
     #toStringFormatHelper(node, depth, sb){
         if(!node.isSentinel()){
             this.#toStringFormatHelper(node.right, depth + 1, sb);
-            let spaces = "        ".repeat(depth);
+            let spaces = "        ".repeat(depth) + "-".repeat(depth);
             let parent = (depth > 0) ? node.parent.key.toString() : "";
             sb.push(`${spaces}(${node.key})${parent}\n`);
             this.#toStringFormatHelper(node.left, depth + 1, sb);

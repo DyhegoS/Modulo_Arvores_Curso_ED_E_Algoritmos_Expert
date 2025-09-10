@@ -15,3 +15,6 @@ console.log("UNION: " + C);
 C = A.intersection(B);
 console.log("Intersection: " + C);
 
+C = A.difference(B);
+console.log("Difference: " + C);
+

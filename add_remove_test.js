@@ -7,5 +7,5 @@ console.log("Original:")
 console.log(A.toStringFormat())
 
 console.log("Remove Test:")
-A.remove(46)
+A.remove(52)
 console.log(A.toStringFormat())

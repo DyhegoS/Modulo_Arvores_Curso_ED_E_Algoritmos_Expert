@@ -1,14 +1,14 @@
 import BinarySearchTreeSet from "./binary-search-tree-set.js";
 
-const A = new BinarySearchTreeSet([52, 17, 67]);
+const A = new BinarySearchTreeSet([1, 2, 3, 4, 5]);
+const B = new BinarySearchTreeSet([4, 5, 6, 7, 8]);
 
 console.log("size: " + A.size());
 console.log("isEmpty: " + A.isEmpty());
 
-// console.log("A contains 83? " + A.constains(83))
-// console.log("A contains 58? " + A.constains(58))
+console.log("\nA: " + A)
+console.log("\nB: " + B)
 
-console.log(A.toString())
-
-console.log(A.toStringFormat())
+let C = A.union(B);
+console.log("UNION: " + C);
 

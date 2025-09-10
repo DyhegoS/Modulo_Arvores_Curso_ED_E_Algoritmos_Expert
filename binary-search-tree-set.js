@@ -63,6 +63,12 @@ export default class BinarySearchTreeSet {
             return false;
         }
 
+        if(!nodeToRemove.left.isSentinel() && !nodeToRemove.right.isSentinel()){
+            let sucessor = this.#findMin(nodeToRemove.right);
+            nodeToRemove.key = sucessor.key;
+            nodeToRemove = sucessor;
+        }
+
         let child = nodeToRemove.left.isSentinel() ? nodeToRemove.right : nodeToRemove.left;
 
         child.parent = nodeToRemove.parent;
@@ -96,6 +102,14 @@ export default class BinarySearchTreeSet {
         return node;
     }
 
+    #findMin(node){
+        while(!node.left.isSentinel()){
+            node = node.left;
+        }
+
+        return node;
+    }
+
     constains(key){
         const node = this.#findKeyLocation(this.#root, key);
         return !node.isSentinel()
@@ -113,6 +127,13 @@ export default class BinarySearchTreeSet {
             keysList.push(node.key);
             this.#collectKeys(node.right, keysList);
         }
+    }
+
+    union(other){
+        let result = new BinarySearchTreeSet();
+        this.keys().forEach(key => result.add(key));
+        other.keys().forEach(key => result.add(key));
+        return result;
     }
 
     toString(){

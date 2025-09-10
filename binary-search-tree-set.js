@@ -136,6 +136,16 @@ export default class BinarySearchTreeSet {
         return result;
     }
 
+    intersection(other){
+        let result = new BinarySearchTreeSet();
+        this.keys().forEach(key => {
+            if(other.constains(key)){
+                result.add(key);
+            };
+        });
+        return result;
+    };
+
     toString(){
         return this.keys().toString();
     }

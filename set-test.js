@@ -12,3 +12,6 @@ console.log("\nB: " + B)
 let C = A.union(B);
 console.log("UNION: " + C);
 
+C = A.intersection(B);
+console.log("Intersection: " + C);
+

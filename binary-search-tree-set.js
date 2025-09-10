@@ -99,7 +99,7 @@ export default class BinarySearchTreeSet {
     #toStringFormatHelper(node, depth, sb){
         if(!node.isSentinel()){
             this.#toStringFormatHelper(node.right, depth + 1, sb);
-            let spaces = (depth > 0) ? "  ".repeat(depth) + "--" : "";
+            let spaces = "        ".repeat(depth);
             let parent = (depth > 0) ? node.parent.key.toString() : "";
             sb.push(`${spaces}(${node.key})${parent}\n`);
             this.#toStringFormatHelper(node.left, depth + 1, sb);
